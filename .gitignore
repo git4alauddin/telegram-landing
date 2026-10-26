@@ -1,6 +1,7 @@
 .idea/
 .wrangler/
 node_modules/
+dist/
 telegram-landing-page-pages.zip
 handoff.txt
 handoff2

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: telegram-landing
+    runtime: static
+    branch: main
+    buildCommand: >-
+      mkdir -p dist &&
+      cp index.html style.css script.js config.js dist/ &&
+      cp -R assets dist/
+    staticPublishPath: ./dist
+    autoDeployTrigger: commit
+    envVars:
+      - key: SKIP_INSTALL_DEPS
+        value: "true"

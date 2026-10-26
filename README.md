@@ -29,7 +29,28 @@ https://dark-wind-4e8c.edudot1234.workers.dev/?utm_source=meta&utm_medium=paid_s
 3. The Meta Pixel ID is `28537605579214881` in `index.html`. Update both the JavaScript initialization and the `noscript` image URL if the Pixel changes.
 4. Confirm that your site notice and privacy information meet the requirements that apply to your campaign.
 
-## Deploy updates from Git
+## Deploy on Render
+
+This project can run as a Render Static Site. `render.yaml` defines the deployment: it copies the four page files and `assets/` into `dist/`, then publishes that directory. It does not install dependencies or compile the page. Render does not use `wrangler.jsonc` or `.assetsignore`.
+
+1. Commit and push `render.yaml`, `.gitignore`, and this README to GitHub.
+2. In the [Render Dashboard](https://dashboard.render.com/), select **New > Blueprint** and connect `git4alauddin/telegram-landing`.
+3. Select `main` and use the repository's `render.yaml`. Review the Static Site resource and deploy it.
+4. Open the URL Render assigns, check the images, and manually test **Join Telegram**. Use Meta Events Manager **Test Events** to verify `PageView` and `TelegramClick` on the new URL.
+
+Alternatively, select **New > Static Site**, connect the same repository, and use these settings:
+
+| Setting | Value |
+| --- | --- |
+| Branch | `main` |
+| Root Directory | Leave blank |
+| Build Command | `mkdir -p dist && cp index.html style.css script.js config.js dist/ && cp -R assets dist/` |
+| Publish Directory | `dist` |
+| Environment variable | `SKIP_INSTALL_DEPS=true` |
+
+Use either the Blueprint flow or the manual Static Site flow to create one site. Subsequent pushes to `main` automatically deploy updates. See [Render Static Sites](https://render.com/docs/static-sites) and [Render Blueprints](https://render.com/docs/infrastructure-as-code).
+
+## Deploy on Cloudflare
 
 The repository root contains `wrangler.jsonc`, which names the Worker to deploy and serves this directory as static assets. `.assetsignore` limits the public assets to `index.html`, `style.css`, `script.js`, `config.js`, and files in `assets/`.
 
